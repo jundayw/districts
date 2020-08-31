@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="XOOPnIyf9qpmXNvMjtWTtXuyNUAfod8NM8PQ8umv">
+    <title>Laravel | 新增配置</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- jQuery 3 -->
+    <script src="jQuery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="select2/dist/css/select2.min.css">
+    <script src="select2/dist/js/select2.full.min.js"></script>
+    <script src="districts/chinese.districts.js"></script>
+    <script src="districts/districts.js"></script>
+    <script>
+        $(function(){
+            $('[name=province],[name=city],[name=country]').districts({
+                data:ChineseDistricts
+            });
+        });
+    </script>
+</head>
+<body class="sidebar-mini wysihtml5-supported skin-purple" style="background-color: #ecf0f5;">
+<label class="col-sm-2 control-label"><span class="text-red">*</span>详细地址</label>
+<div class="col-sm-2">
+	<select class="form-control" rel-action="select" name="province" rel-target="[name=city]" rel-option="370000" data-placeholder="请选择省/直辖市" style="width:100%;"></select>
+</div>
+<div class="col-sm-2">
+	<select class="form-control" rel-action="select" name="city" rel-target="[name=county]" rel-option="370800" data-placeholder="请选择市/区" style="width:100%;"></select>
+</div>
+<div class="col-sm-2">
+	<select class="form-control" rel-action="select" name="county" rel-option="370883" data-placeholder="请选择县" style="width:100%;"></select>
+</div>
+<p></p>
+</body>
+</html>
