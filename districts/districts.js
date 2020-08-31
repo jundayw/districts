@@ -56,15 +56,19 @@
 			}).val(value).trigger(options.change);
 		};
 		// 数据获取方法
-		var data = function(data, option) {
+		var data = function(data, option, children) {
 			if (data[options.map.id] == option) {
-				return data.hasOwnProperty(options.map.children) ? data[options.map.children] : data;
+				if(children){
+					return data.hasOwnProperty(options.map.children) ? data[options.map.children] : data;
+				}else{
+					return data;
+				}
 			}
 			if (data.hasOwnProperty(options.map.children) == false) {
 				return false;
 			}
 			for (var key in data[options.map.children]) {
-				if (regon = arguments.callee(data[options.map.children][key], option)) {
+				if (regon = arguments.callee(data[options.map.children][key], option, children)) {
 					return regon;
 				}
 			}
@@ -73,7 +77,7 @@
 		// 构建方法
 		var build = function(element, checked) {
 			// 获取数据
-			var items = function(option) {
+			var items = function(option, children) {
 				if (option == undefined) {
 					return options.data;
 				}
@@ -81,24 +85,24 @@
 					return [];
 				}
 				for (var key in options.data) {
-					if (regon = data(options.data[key], option)) {
+					if (regon = data(options.data[key], option, children)) {
 						return regon;
 					}
 				}
 				return [];
-			}(checked);
+			};
 			// 目标事件绑定
 			$(element).unbind(options.change).bind(options.change, function() {
 				var checked = $(element).children('option:selected').val();
 					// 回调支持
-					options.callback(element, items, checked);
+					options.callback(element, items(checked, false), checked);
 				// 目标事件传递
 				if (target = $(element).attr(options.target)) {
 					return build(target, checked);
 				}
 			});
 			// 开始构建结构
-			return plugin(element, items, $(element).attr(options.option) || options.index);
+			return plugin(element, items(checked, true), $(element).attr(options.option) || options.index);
 		}
 		// 触发第一个元素的加载事件
 		$(elements.slice(0, 1).join()).unbind(options.load).bind(options.load, function() {
